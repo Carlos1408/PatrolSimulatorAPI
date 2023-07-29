@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  userKey String
+  name String
+  lastName String
+  email String
+  password String
+  confirmPassword String @ignore
+  status String
+  rank String
+  ffaa String
+  created DateTime @default(now())
+  update DateTime @updatedAt
+  patrols Patrol[]
+
+  roles user_roles[]
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  name String
+
+  users user_roles[]
+}
+
+model user_roles {
+  fk_user Int
+  user User @relation(fields: [fk_user], references: [id], onDelete: Cascade)
+
+  fk_role Int
+  role Role @relation(fields: [fk_role], references: [id], onDelete: Cascade)
+  @@id([fk_user, fk_role])
+}
+
+model Map {
+  id Int @id @default(autoincrement())
+  mapKey String
+  name String
+  weather String
+
+  patrols Patrol[]
+}
+
+model Patrol {
+  id Int @id @default(autoincrement())
+  patrolKey String
+  created DateTime @default(now())
+  update DateTime @updatedAt
+  qualification Float @default(0.0)
+  totalSeconds Int @default(0)
+
+  fk_user Int
+  user User @relation(fields: [fk_user], references: [id], onDelete: Cascade)
+
+  fk_map Int
+  map Map @relation(fields: [fk_map], references: [id], onDelete: Cascade)
+
+  patrolTask PatrolTask?
+
+  recognition Recognition?
+
+  recognitionResult RecognitionResult?
+  
+  ambushResult AmbushResult?
+
+  combatResult CombatResult?
+}
+
+model PatrolTask {
+  id Int @id @default(autoincrement())
+  taskKey String
+  output Boolean @default(false)
+  pri Boolean @default(false)
+  pc Boolean @default(false)
+  formation Boolean @default(false)
+  pp Boolean @default(false)
+  px Boolean @default(false)
+  boxPx Boolean @default(false)
+  proPx Boolean @default(false)
+  pro Boolean @default(false)
+  clover Boolean @default(false)
+  pd Boolean @default(false)
+  target Boolean @default(false)
+  prdo Boolean @default(false)
+  created DateTime @default(now())
+  update DateTime @updatedAt
+
+  fk_patrol Int @unique
+  patrol Patrol @relation(fields: [fk_patrol], references: [id], onDelete: Cascade)
+}
+
+model Recognition {
+  id Int @id @default(autoincrement())
+  recognitionKey String
+  watchtowers Int
+  tank Int
+  helicopter Int
+  alternativeRoute Boolean
+  mortar Int
+  jeep Int
+
+  fk_patrol Int @unique
+  patrol Patrol @relation(fields: [fk_patrol], references: [id], onDelete: Cascade)
+}
+
+model RecognitionResult {
+  id Int @id @default(autoincrement())
+  resultKey String
+  formationsQualification Float
+  techniquesRecognitionsQualifications Float
+  
+  fk_patrol Int @unique
+  patrol Patrol @relation(fields: [fk_patrol], references: [id], onDelete: Cascade)
+}
+
+model AmbushResult {
+  id Int @id @default(autoincrement())
+  formation String
+  qualification Float @default(0.0)
+
+  fk_patrol Int @unique
+  patrol Patrol @relation(fields: [fk_patrol], references: [id], onDelete: Cascade)
+}
+
+model CombatResult {
+  id Int @id @default(autoincrement())
+  q_enemies Int
+  q_friend_deaths Int
+  q_enemy_deaths Int
+  totalSeconds Int @default(0)
+
+  fk_patrol Int @unique
+  patrol Patrol @relation(fields: [fk_patrol], references: [id], onDelete: Cascade)
+}
