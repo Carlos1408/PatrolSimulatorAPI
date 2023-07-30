@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const {
   getAll,
-  getRecognitionByKey,
+  getRecognition,
   save,
   saveRecognition,
 } = require("../controllers/recognitions.controller");
@@ -9,8 +9,8 @@ const {
 const router = Router();
 
 router.get("", getAll);
-router.get("/:recognitionKey", getRecognitionByKey);
+router.get("/:id", getRecognition);
 router.post("", save);
-router.post("/patrol/:patrolKey", saveRecognition);
+router.post("/patrol/:patrolId", saveRecognition);
 
 module.exports = router;

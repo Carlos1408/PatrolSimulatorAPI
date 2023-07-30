@@ -2,19 +2,21 @@ const { Router } = require("express");
 const {
   getAll,
   getAllOrderByLastNameAsc,
-  getByUserKey,
+  getUser,
   saveUser,
   savePatrol,
   updateUser,
+  deleteUser,
 } = require("../controllers/users.controller");
 
 const router = Router();
 
 router.get("", getAll);
 router.get("/OrderBy", getAllOrderByLastNameAsc);
-router.get("/:userKey", getByUserKey);
+router.get("/:id", getUser);
 router.post("", saveUser);
 router.post("/:id/patrol", savePatrol);
-router.put("/:key", updateUser);
+router.put("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 module.exports = router;

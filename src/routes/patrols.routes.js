@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const {
   getAll,
-  getPatrolByKey,
-  getPatrolsByUserKey,
+  getPatrol,
+  getPatrolsByUser,
   savePatrol,
   updatePatrolTotalSecond,
   applyPatchToPatrol,
@@ -12,11 +12,11 @@ const {
 const router = Router();
 
 router.get("", getAll);
-router.get("/:patrolKey", getPatrolByKey);
-router.get("/users/:userKey", getPatrolsByUserKey);
+router.get("/:id", getPatrol);
+router.get("/users/:userId", getPatrolsByUser);
 router.post("", savePatrol);
-router.post("/:patrolKey/tasks", updatePatrolTotalSecond);
-router.put("/:patrolKey/patch", applyPatchToPatrol);
-router.put("/:patrolKey", updateTime);
+router.post("/:id/patch", updatePatrolTotalSecond);
+//router.put("/:id/patch", applyPatchToPatrol);
+router.put("/:id", updateTime);
 
 module.exports = router;

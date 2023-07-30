@@ -1,16 +1,16 @@
 const { Router } = require("express");
 const {
   getAll,
-  getResultByKey,
   save,
   saveResult,
+  getResult,
 } = require("../controllers/recognitionResults.controller");
 
 const router = Router();
 
 router.get("", getAll);
-router.get("/:resultKey", getResultByKey);
+router.get("/:id", getResult);
 router.post("", save);
-router.post("/patrol/:patrolKey", saveResult);
+router.post("/patrol/:patrolId", saveResult);
 
 module.exports = router;

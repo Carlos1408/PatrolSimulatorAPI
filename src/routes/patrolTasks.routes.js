@@ -1,8 +1,9 @@
 const { Router } = require("express");
-const {getPatrolByKey, save} = require("../controllers/patrolTasks.controller")
+const {getPatrol, save} = require("../controllers/patrolTasks.controller")
 
 const router = Router();
 
-router.get("/:key", getPatrolByKey)
+router.get("/:id", getPatrol)
+router.post("/:patrolId", save)
 
 module.exports = router

@@ -1,20 +1,36 @@
-const prisma = require("../libs/prisma")
+const prisma = require("../libs/prisma");
 
 const getAll = async (req, res) => {
-    const recognitionResults = prisma.recognitionResult.findMany()
-    res.json(recognitionResults)
-}
+  const recognitionResults = prisma.recognitionResult.findMany({
+    include: { patrol: true },
+  });
+  res.json(recognitionResults);
+};
 
-const getResultByKey = async (req, res) => {
-
-}
+const getResult = async (req, res) => {
+  const { id } = req.params;
+  const recognitionResult = prisma.recognitionResult.findFirst({
+    where: { id },
+  });
+  res.json(recognitionResult);
+};
 
 const save = async (req, res) => {
+  const {
+    patrolId,
+    formationsQualification,
+    techniquesRecognitionsQualifications,
+  } = req.body;
+  const recognitionResult = await prisma.recognitionResult.create({
+    data: {
+      formationsQualification,
+      techniquesRecognitionsQualifications,
+      patrol: { connect: { id: patrolId } },
+    },
+  });
+  res.json(recognitionResult);
+};
 
-}
+const saveResult = async (req, res) => {};
 
-const saveResult = async (req, res) => {
-
-}
-
-module.exports = {getAll, getResultByKey, save, saveResult}
+module.exports = { getAll, getResult, save, saveResult };
