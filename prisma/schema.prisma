@@ -137,11 +137,12 @@ model AmbushResult {
 }
 
 model CombatResult {
-  id              String @id @unique @default(uuid())
+  id              String  @id @unique @default(uuid())
   q_enemies       Int
   q_friend_deaths Int
   q_enemy_deaths  Int
-  totalSeconds    Int    @default(0)
+  totalSeconds    Int     @default(0)
+  player_dead     Boolean @default(false)
 
   fk_patrol String @unique
   patrol    Patrol @relation(fields: [fk_patrol], references: [id], onDelete: Cascade)

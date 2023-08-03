@@ -1,11 +1,20 @@
-const prisma = require("../libs/prisma")
+const prisma = require("../libs/prisma");
+const bycript = require("bcryptjs");
 
-const auth = async (req, res) => {
+const login = async (req, res) => {
+  const { username, password } = req.body;
+  const user = await prisma.user.findFirst({ where: { username } });
+  if (user) {
+    await bycript.compare(password, user.password, (err, succ) => {
+      if (err) console.log(err);
+      if (succ) {
+        console.log(user);
+        res.status(200).json(user);
+      } else res.json();
+    });
+  } else res.json();
+};
 
-}
+const signInUsingToken = async (req, res) => {};
 
-const signInUsingToken = async (req, res) => {
-    
-}
-
-module.exports = {auth, signInUsingToken}
+module.exports = { login, signInUsingToken };

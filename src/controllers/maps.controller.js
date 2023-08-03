@@ -17,9 +17,31 @@ const getMap = async (req, res) => {
   else res.status(404).json({ error: "Not found" });
 };
 
+const getMapByName = async (req, res) => {
+  const { name } = req.params;
+  const map = await prisma.map.findFirst({
+    where: { name },
+  });
+  console.log(map);
+  if (map) res.status(200).json(map);
+  else res.status(404).json({ error: "Not found" });
+};
+
 const save = async (req, res) => {
   const map = await prisma.map.create({ data: req.body });
   res.json(map);
 };
 
-module.exports = { getAll, getMap, save };
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { qualification, totalSeconds } = req.body;
+  const patrol = prisma.patrol.update({
+    where: { id },
+    data: {
+      qualification,
+      totalSeconds,
+    },
+  });
+};
+
+module.exports = { getAll, getMap, save, getMapByName, update };
