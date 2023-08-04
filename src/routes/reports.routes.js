@@ -1,8 +1,16 @@
 const { Router } = require("express");
-const { download } = require("../controllers/reports.controller");
+const {
+  patrols,
+  recognitions,
+  ambushes,
+  combats,
+} = require("../controllers/reports.controller");
 
 const router = Router();
 
-router.get("/patrols/download", download);
+router.get("/patrols", patrols);
+router.get("/recognitions", recognitions);
+router.get("/ambushes", ambushes);
+router.get("/combats", combats);
 
 module.exports = router;

@@ -10,9 +10,9 @@ const login = async (req, res) => {
       if (succ) {
         console.log(user);
         res.status(200).json(user);
-      } else res.json();
+      } else res.status(401).json();
     });
-  } else res.json();
+  } else res.status(404).json();
 };
 
 const signInUsingToken = async (req, res) => {};

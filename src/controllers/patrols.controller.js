@@ -62,6 +62,7 @@ const updateTime = async (req, res) => {
       totalSeconds,
     },
   });
+  console.log(patrol);
   res.json(patrol);
 };
 

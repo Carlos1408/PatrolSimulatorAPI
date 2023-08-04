@@ -51,17 +51,17 @@ model Map {
   //mapKey String @default(uuid())
   name    String
   weather String
+  type    String @default("Recognition")
 
   patrols Patrol[]
 }
 
 model Patrol {
-  id            String   @id @unique @default(uuid())
+  id           String   @id @unique @default(uuid())
   //patrolKey String @default(uuid())
-  created       DateTime @default(now())
-  update        DateTime @updatedAt
-  qualification Float    @default(0.0)
-  totalSeconds  Int      @default(0)
+  created      DateTime @default(now())
+  update       DateTime @updatedAt
+  totalSeconds Int      @default(0)
 
   fk_user String
   user    User   @relation(fields: [fk_user], references: [id], onDelete: Cascade)
@@ -122,6 +122,7 @@ model RecognitionResult {
   //resultKey String @default(uuid())
   formationsQualification              Float
   techniquesRecognitionsQualifications Float
+  qualification                        Float  @default(0.0)
 
   fk_patrol String @unique
   patrol    Patrol @relation(fields: [fk_patrol], references: [id], onDelete: Cascade)
@@ -141,6 +142,7 @@ model CombatResult {
   q_enemies       Int
   q_friend_deaths Int
   q_enemy_deaths  Int
+  qualification   Float   @default(0.0)
   totalSeconds    Int     @default(0)
   player_dead     Boolean @default(false)
 
