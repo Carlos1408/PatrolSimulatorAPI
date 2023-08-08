@@ -20,11 +20,13 @@ const save = async (req, res) => {
     patrolId,
     formationsQualification,
     techniquesRecognitionsQualifications,
+    qualification,
   } = req.body;
   const recognitionResult = await prisma.recognitionResult.create({
     data: {
       formationsQualification,
       techniquesRecognitionsQualifications,
+      qualification,
       patrol: { connect: { id: patrolId } },
     },
   });

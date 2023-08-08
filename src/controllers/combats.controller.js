@@ -19,6 +19,7 @@ const create = async (req, res) => {
     q_enemies,
     q_friend_deaths,
     q_enemy_deaths,
+    qualification,
     totalSeconds,
     player_dead,
   } = req.body;
@@ -27,11 +28,13 @@ const create = async (req, res) => {
       q_enemies,
       q_friend_deaths,
       q_enemy_deaths,
+      qualification,
       totalSeconds,
       player_dead,
       patrol: { connect: { id: patrolId } },
     },
   });
+  console.log('RESULT');
   console.log(combat);
   res.json(combat);
 };

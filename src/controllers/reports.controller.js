@@ -119,9 +119,9 @@ const combats = async (req, res) => {
     { key: "userEmail", label: "Correo Electronico", align: "left" },
     { key: "mapName", label: "Mapa", align: "left" },
     { key: "totalTime", label: "Tiempo total", align: "left" },
-    { key: "q_enemies", label: "Cant. Enemigos", align: "left" },
-    { key: "q_friend_deaths", label: "Cant. Bajas amigas", align: "left" },
-    { key: "q_enemy_deaths", label: "Cant. Bajas enemigas", align: "left" },
+    { key: "q_enemies", label: "Nro. Enemigos", align: "left" },
+    { key: "q_friend_deaths", label: "Bajas amigas", align: "left" },
+    { key: "q_enemy_deaths", label: "Bajas enemigas", align: "left" },
     { key: "player_dead", label: "Jugador muerto", align: "left" },
     { key: "qualification", label: "Calificación", align: "left" },
   ];

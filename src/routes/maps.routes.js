@@ -13,7 +13,7 @@ const router = Router();
 
 router.get("", getAll);
 router.get("/:id", getMap);
-router.get("/name/:name", getMapByName);
+router.get("/name/:name", debug, getMapByName);
 router.post("", save);
 router.put("/:id", update);
 

@@ -6,6 +6,6 @@ const router = Router();
 
 router.get("", getAll);
 router.get("/:id", get);
-router.post("", create);
+router.post("", debug, create);
 
 module.exports = router;
