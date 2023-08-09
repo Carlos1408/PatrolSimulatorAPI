@@ -7,6 +7,7 @@ const {
   savePatrol,
   updateUser,
   deleteUser,
+  getUserByUsername,
 } = require("../controllers/users.controller");
 
 const router = Router();
@@ -14,6 +15,7 @@ const router = Router();
 router.get("", getAll);
 router.get("/OrderBy", getAllOrderByLastNameAsc);
 router.get("/:id", getUser);
+router.get("/name/:username", getUserByUsername);
 router.post("", saveUser);
 router.post("/:id/patrol", savePatrol);
 router.put("/:id", updateUser);

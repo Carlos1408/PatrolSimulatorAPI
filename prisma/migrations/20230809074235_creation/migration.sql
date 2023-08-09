@@ -7,8 +7,8 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'active',
-    "rank" TEXT NOT NULL,
-    "ffaa" TEXT NOT NULL,
+    "rank" TEXT NOT NULL DEFAULT 'Est',
+    "ffaa" TEXT NOT NULL DEFAULT '',
     "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update" TIMESTAMP(3) NOT NULL,
 

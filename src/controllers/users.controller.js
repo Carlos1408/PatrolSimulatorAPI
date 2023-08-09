@@ -23,6 +23,13 @@ const getUser = async (req, res) => {
   res.json(user);
 };
 
+const getUserByUsername = async (req, res) => {
+  const { username } = req.params;
+  const user = await prisma.user.findFirst({ where: { username } });
+  if (user) res.status(200).json(user);
+  else res.status(404).json();
+};
+
 const saveUser = async (req, res) => {
   const { username, name, lastName, email, password, status, rank, ffaa } =
     req.body;
@@ -76,4 +83,5 @@ module.exports = {
   savePatrol,
   updateUser,
   deleteUser,
+  getUserByUsername,
 };
