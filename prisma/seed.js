@@ -23,7 +23,7 @@ const maps = [
   { name: "Potosi_O", weather: "Frontera", type: "Ambush" },
   { name: "Potosi_NO", weather: "Frontera", type: "Ambush" },
   { name: "Potosi_SO", weather: "Frontera", type: "Ambush" },
-  { name: "Cirtuit1", weather: "Cirtuito", type: "Combat" },
+  { name: "Circuit1", weather: "Cirtuito", type: "Combat" },
 ];
 
 async function main() {
