@@ -1,4 +1,5 @@
 ### Node ###
+./prisma/migrations/*/*
 # Logs
 logs
 *.log
