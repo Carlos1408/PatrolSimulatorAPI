@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const {getPatrol, save} = require("../controllers/patrolTasks.controller")
+const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 

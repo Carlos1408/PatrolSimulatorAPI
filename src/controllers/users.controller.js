@@ -53,7 +53,9 @@ const savePatrol = async (req, res) => {};
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, name, lastName, email, status, rank, ffaa } = req.body;
+  const { username, name, lastName, email, status, rank, ffaa, password } =
+    req.body;
+  const hash = await bcryptjs.hash(password, 8);
   const user = await prisma.user.update({
     where: { id },
     data: {
@@ -64,6 +66,7 @@ const updateUser = async (req, res) => {
       status,
       rank,
       ffaa,
+      // password: hash,
     },
   });
   res.json(user);

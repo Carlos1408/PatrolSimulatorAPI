@@ -5,6 +5,7 @@ const {
   ambushes,
   combats,
 } = require("../controllers/reports.controller");
+const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 

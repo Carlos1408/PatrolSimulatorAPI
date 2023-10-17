@@ -4,6 +4,6 @@ const {login, signInUsingToken} = require("../controllers/auth.controller.js")
 const router = Router();
 
 router.post("/login", login)
-router.post("sign-up", signInUsingToken)
+router.post("/sign-up-by-token", signInUsingToken)
 
 module.exports = router

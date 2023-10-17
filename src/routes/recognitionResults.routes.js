@@ -6,6 +6,7 @@ const {
   getResult,
 } = require("../controllers/recognitionResults.controller");
 const { debug } = require("../controllers/debug.controller");
+const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 

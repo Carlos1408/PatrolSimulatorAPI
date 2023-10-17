@@ -1,6 +1,30 @@
 const prisma = require("../libs/prisma");
 const PDF = require("pdfkit-construct");
 const { v4: uuid } = require("uuid");
+const path = require("path");
+
+const date = new Date();
+
+const day = date.getDate();
+
+const months = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+
+const month = months[date.getMonth()];
+
+const year = date.getFullYear();
 
 const patrols = async (req, res) => {
   const fields = [
@@ -29,7 +53,9 @@ const patrols = async (req, res) => {
       userLastName: patrol.user.lastName,
       userEmail: patrol.user.email,
       mapName: patrol.map.name,
-      totalTime: patrol.totalSeconds,
+      totalTime: `${Math.trunc(patrol.totalSeconds / 60)}m ${
+        patrol.totalSeconds % 60
+      }s`,
     };
   });
 
@@ -41,17 +67,17 @@ const recognitions = async (req, res) => {
     { key: "date", label: "Fecha", align: "left" },
     { key: "userName", label: "Nombre", align: "left" },
     { key: "userLastName", label: "Apellido", align: "left" },
-    { key: "userEmail", label: "Correo Electronico", align: "left" },
+    //{ key: "userEmail", label: "Correo Electronico", align: "left" },
     { key: "mapName", label: "Mapa", align: "left" },
     { key: "totalTime", label: "Tiempo total", align: "left" },
     {
       key: "formationsQualification",
-      label: "Calificación de formaciones",
+      label: "Calif. de formaciones",
       align: "left",
     },
     {
       key: "techniquesRecognitionsQualifications",
-      label: "Calificación de tec. de recon.",
+      label: "Calif. de recon.",
       align: "left",
     },
     { key: "qualification", label: "Calificación final", align: "left" },
@@ -67,13 +93,15 @@ const recognitions = async (req, res) => {
       date: `${recognition.patrol.created.getDate()}/${recognition.patrol.created.getMonth()}/${recognition.patrol.created.getFullYear()}`,
       userName: recognition.patrol.user.name,
       userLastName: recognition.patrol.user.lastName,
-      userEmail: recognition.patrol.user.email,
+      //userEmail: recognition.patrol.user.email,
       mapName: recognition.patrol.map.name,
-      totalTime: recognition.patrol.totalSeconds,
+      totalTime: `${Math.trunc(recognition.patrol.totalSeconds / 60)}m ${
+        recognition.patrol.totalSeconds % 60
+      }s`,
       formationsQualification: recognition.formationsQualification,
       techniquesRecognitionsQualifications:
         recognition.techniquesRecognitionsQualifications,
-      qualification: recognition.qualification,
+      qualification: recognition.qualification.toFixed(1),
     };
   });
 
@@ -102,9 +130,11 @@ const ambushes = async (req, res) => {
       userLastName: ambush.patrol.user.lastName,
       userEmail: ambush.patrol.user.email,
       mapName: ambush.patrol.map.name,
-      totalTime: ambush.patrol.totalSeconds,
+      totalTime: `${Math.trunc(ambush.patrol.totalSeconds / 60)}m ${
+        ambush.patrol.totalSeconds % 60
+      }s`,
       formation: ambush.formation,
-      qualification: ambush.qualification,
+      qualification: ambush.qualification.toFixed(1),
     };
   });
 
@@ -116,7 +146,7 @@ const combats = async (req, res) => {
     { key: "date", label: "Fecha", align: "left" },
     { key: "userName", label: "Nombre", align: "left" },
     { key: "userLastName", label: "Apellido", align: "left" },
-    { key: "userEmail", label: "Correo Electronico", align: "left" },
+    //{ key: "userEmail", label: "Correo Electronico", align: "left" },
     { key: "mapName", label: "Mapa", align: "left" },
     { key: "totalTime", label: "Tiempo total", align: "left" },
     { key: "q_enemies", label: "Nro. Enemigos", align: "left" },
@@ -134,14 +164,16 @@ const combats = async (req, res) => {
       date: `${combat.patrol.created.getDate()}/${combat.patrol.created.getMonth()}/${combat.patrol.created.getFullYear()}`,
       userName: combat.patrol.user.name,
       userLastName: combat.patrol.user.lastName,
-      userEmail: combat.patrol.user.email,
+      //userEmail: combat.patrol.user.email,
       mapName: combat.patrol.map.name,
-      totalTime: combat.patrol.totalSeconds,
+      totalTime: `${Math.trunc(combat.patrol.totalSeconds / 60)}m ${
+        combat.patrol.totalSeconds % 60
+      }s`,
       q_enemies: combat.q_enemies,
       q_friend_deaths: combat.q_friend_deaths,
       q_enemy_deaths: combat.q_enemy_deaths,
       player_dead: combat.player_dead ? "Si" : "No",
-      qualification: combat.qualification,
+      qualification: combat.qualification.toFixed(1),
     };
   });
 
@@ -149,7 +181,11 @@ const combats = async (req, res) => {
 };
 
 function sendPDF(req, res, fields, rows, title) {
-  const doc = new PDF({ bufferPages: true });
+  const doc = new PDF({
+    margins: { top: 20, left: 30, right: 30, bottom: 20 },
+    bufferPages: true,
+  });
+  //generateHeader(doc)
   const stream = res.writeHead(200, {
     "Content-Type": "application/pdf",
     "Content-disposition": `attachment;filename=Reporte ${uuid()}.pdf`,
@@ -160,26 +196,59 @@ function sendPDF(req, res, fields, rows, title) {
   doc.on("end", () => {
     stream.end();
   });
-  doc.setDocumentHeader({}, () => {
-    doc.text(title, {
-      width: 420,
-      align: "center",
-    });
+  // doc.setDocumentHeader({}, () => {
+  //   doc.text(title, {
+  //     width: 420,
+  //     height: 500,
+  //     align: "center",
+  //   });
+  // });
+
+  doc.setDocumentHeader({ height: "15%" }, () => {
+    doc
+      .image(path.resolve("./src/assets/images/EMI Logo2.jpeg"), 50, 50, {
+        width: 100,
+      })
+      .fontSize(10)
+      .text((format2 = `${day} de ${month}, ${year}`), 0, 65, {
+        align: "right",
+      })
+      .text("Lanza entre La Paz y Oruro", 0, 80, { align: "right" })
+      .moveDown(2);
   });
+  doc
+    .font("Helvetica-Bold")
+    .text(title, 0, 105, {
+      align: "center",
+    })
+    .fontSize(40);
 
   doc.addTable(fields, rows, {
     border: null,
     width: "fill_body",
+    headHeight: 30,
     striped: true,
-    stripedColors: ["#aaaaaa", "#bbbbbb"],
-    cellsPadding: 5,
-    marginLeft: 30,
-    marginRight: 30,
+    stripedColors: ["#dcdcdc", "#c8c8c8"],
+    cellsPadding: 3,
+    marginLeft: 0,
+    marginRight: 0,
     headAlign: "left",
+    cellsMaxWidth: 50,
   });
   doc.render();
 
   doc.end();
+}
+
+function generateHeader(doc) {
+  doc
+    .image(path.resolve("./src/assets/images/EMI Logo2.jpeg"), 50, 50, {
+      width: 150,
+    })
+    .fontSize(10)
+    .text(Date.now(), 200, 65, { align: "right" })
+    //.text("New York, NY, 10025", 200, 80, { align: "right" })
+    .moveDown();
 }
 
 module.exports = { patrols, recognitions, ambushes, combats };

@@ -9,6 +9,7 @@ const {
   deleteUser,
   getUserByUsername,
 } = require("../controllers/users.controller");
+const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 

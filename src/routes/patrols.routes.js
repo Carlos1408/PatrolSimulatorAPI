@@ -9,6 +9,7 @@ const {
   updateTime,
 } = require("../controllers/patrols.controller");
 const { debug } = require("../controllers/debug.controller");
+const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 

@@ -9,9 +9,11 @@ const {
   update,
 } = require("../controllers/maps.controller");
 
+const { verifyToken } = require("../controllers/auth.controller");
+
 const router = Router();
 
-router.get("", getAll);
+router.get("", verifyToken, getAll);
 router.get("/:id", getMap);
 router.get("/name/:name", debug, getMapByName);
 router.post("", save);

@@ -1,6 +1,7 @@
 const prisma = require("../libs/prisma");
 
 const getAll = async (req, res) => {
+  console.log(req.headers);
   const maps = await prisma.map.findMany({
     include: { patrols: { include: { user: true, map: true } } },
   });
