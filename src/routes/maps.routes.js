@@ -16,7 +16,7 @@ const router = Router();
 router.get("", verifyToken, getAll);
 router.get("/:id", getMap);
 router.get("/name/:name", debug, getMapByName);
-router.post("", save);
-router.put("/:id", update);
+router.post("", verifyToken, save);
+router.put("/:id", verifyToken, update);
 
 module.exports = router;

@@ -32,6 +32,7 @@ const signInUsingToken = async (req, res) => {
 };
 
 const verifyToken = async (req, res, next) => {
+  console.log(req.headers);
   try {
     if (!req.headers.authorization) {
       return res.status(401).json({ message: "unauthorized" });

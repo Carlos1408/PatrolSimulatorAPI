@@ -13,13 +13,13 @@ const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 
-router.get("", getAll);
-router.get("/OrderBy", getAllOrderByLastNameAsc);
-router.get("/:id", getUser);
-router.get("/name/:username", getUserByUsername);
-router.post("", saveUser);
+router.get("", verifyToken, getAll);
+router.get("/OrderBy", verifyToken, getAllOrderByLastNameAsc);
+router.get("/:id", verifyToken, getUser);
+router.get("/name/:username", verifyToken, getUserByUsername);
+router.post("", verifyToken, saveUser);
 router.post("/:id/patrol", savePatrol);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.put("/:id", verifyToken, updateUser);
+router.delete("/:id", verifyToken, deleteUser);
 
 module.exports = router;

@@ -5,8 +5,8 @@ const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 
-router.get("", getAll);
-router.get("/:id", get);
-router.post("", debug, create);
+router.get("", verifyToken, getAll);
+router.get("/:id", verifyToken, get);
+router.post("", create);
 
 module.exports = router;

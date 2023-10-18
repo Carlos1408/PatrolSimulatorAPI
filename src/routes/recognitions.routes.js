@@ -10,8 +10,8 @@ const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 
-router.get("", getAll);
-router.get("/:id", getRecognition);
+router.get("", verifyToken, getAll);
+router.get("/:id", verifyToken, getRecognition);
 router.post("", debug, save);
 router.post("/patrol/:patrolId", saveRecognition);
 

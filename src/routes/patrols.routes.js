@@ -13,9 +13,9 @@ const { verifyToken } = require("../controllers/auth.controller");
 
 const router = Router();
 
-router.get("", getAll);
-router.get("/:id", getPatrol);
-router.get("/users/:userId", getPatrolsByUser);
+router.get("", verifyToken, getAll);
+router.get("/:id", verifyToken, getPatrol);
+router.get("/users/:userId", verifyToken, getPatrolsByUser);
 router.post("", debug, savePatrol);
 router.post("/:id/patch", updatePatrolTotalSecond);
 //router.put("/:id/patch", applyPatchToPatrol);
